@@ -20,4 +20,4 @@ nginx 配置文件可参考 根目录下 nginx.conf 文件  .
 如果你的php版本是5.6.* ,可能会出现错误，你可以把php.ini文件里边 always_populate_raw_post_data = -1 注释去掉解决问题.
 如果你的php版本>5.6,不会出现此问题。我们推荐使用php的版本为7.*
 
-详细的教程请参考网址：https://www.kancloud.cn/dzmyiliao/dzm/463354 
+详细的教程请参考网址：https://www.kancloud.cn/dzmyiliao/dzm/463354  
