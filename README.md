@@ -17,7 +17,7 @@
 
 ### 五.安装过程
 
-安装过程请参考使用手册：http://www.kancloud.cn/dzmyiliao/dzm/463354
+安装过程请参考使用手册：https://www.kancloud.cn/dzmyiliao/dzm/463355
 
 ### 六.功能特色
 
