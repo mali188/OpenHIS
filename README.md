@@ -5,7 +5,8 @@
 ### 二.诊所流程图
 ![诊所流程图](https://gitee.com/uploads/images/2017/1130/173955_d67d64b3_1661554.png "图片1.png")
 
-三.系统截图
+### 三.系统截图
+
 ![统计面板](https://gitee.com/uploads/images/2017/1130/174130_52bf17b7_1661554.png "图片2.png")
 ![综合支付](https://gitee.com/uploads/images/2017/1130/174146_d5ab6628_1661554.png "图片3.png")
 
