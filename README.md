@@ -12,8 +12,8 @@
 
 ### 四.环境要求
 
- 1.PHP>=5.5.0
- 2. 扩展 Mysql/Mysqli/PDO , GD2 ，mbstring1.
+- PHP>=5.5.0
+- 扩展 Mysql/Mysqli/PDO , GD2 ，- 这里是列表文本mbstring1.
 
 ### 五.安装过程
 
