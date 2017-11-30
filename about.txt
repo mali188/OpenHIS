@@ -10,7 +10,7 @@
  
 
 
-nginx 配置文件可参考 根目录下 nginx.conf 文件  
+nginx 配置文件可参考 根目录下 nginx.conf 文件  .
 
 
 
