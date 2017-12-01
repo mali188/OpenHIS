@@ -208,7 +208,10 @@ class HisRegistrationModel extends BaseModel
      */
     public function registration_cancel(){
         $this->startTrans();
-        $todaytime=strtotime("today");
+        $year = date("Y");
+        $month = date("m");
+        $day = date("d");
+        $todaytime= mktime(23,58,00,$month,$day,$year);
         $info = $this->where(array("create_time"=>array('lt',$todaytime),'registration_status'=>array("in",array(1,5,6))))->select();
         $return_info = $this->where(array("create_time"=>array('lt',$todaytime),'registration_status'=>array("in",array(1,5,6))))->save(array('registration_status'=>4));
         if($return_info){

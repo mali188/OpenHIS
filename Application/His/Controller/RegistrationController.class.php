@@ -783,4 +783,14 @@ class RegistrationController extends HisBaseController
         $registration_number = $year . $month . $days . $company_id . $registration_id;
         return $registration_number;
     }
+    /**
+     * @Name     cancel_all_registration
+     * @explain  将所有时间过期，并且没有为未就诊的作废   *定时任务请求*
+     * @author   zuochuanye
+     * @Date     2017/11/24
+     */
+    public function cancel_all_registration(){
+        $this->_registration = D('his_registration');
+        $this->_registration->registration_cancel();
+    }
 }
