@@ -31,3 +31,7 @@
 使用手册：[使用文档](http://www.kancloud.cn/dzmyiliao/dzm/463354)
 论坛：[论坛](http://bbs.dzmtech.com)
 
+八.OpenHIs交流群
+
+qq群：616207827
+
