@@ -23,7 +23,8 @@
 											<span class="input-group-btn">
 												<span class="btn">姓名：</span>
 											</span>
-                                            <input type="text" class="form-control form-itmeB" maxlength="10" name="name" placeholder="">
+                                            <input type="text" class="form-control form-itmeB" maxlength="10" name="name" placeholder="" onkeyup="value=value.replace(/[^\a-zA-Z\u4E00-\u9FA5]/g,'')"
+                                                   onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\a-zA-Z\u4E00-\u9FA5]/g,''))">
                                             <i class="fa fa-user patientAdd"></i>
                                         </div>
                                         <div class="input-group listSeaForm r" style=" width: 30%;">
@@ -52,7 +53,8 @@
 											<span class="input-group-btn">
 												<span class="btn">手机：</span>
 											</span>
-                                            <input type="text" class="form-control form-itmeB" name="mobile" placeholder="">
+                                            <input type="text" class="form-control form-itmeB" name="mobile" placeholder="" onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                   onafterpaste="this.value=this.value.replace(/\D/g,'')">
                                         </div>
                                     </li>
                                     <li>
@@ -60,7 +62,7 @@
 											<span class="input-group-btn">
 												<span class="btn">身份证：</span>
 											</span>
-                                            <input type="text" class="form-control form-itmeB" name="id_card" placeholder="">
+                                            <input type="text" class="form-control form-itmeB" name="id_card" placeholder="" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" maxlength="18">
                                         </div>
                                     </li>
                                     <li><span>住址：</span>
@@ -256,7 +258,6 @@
         timepicker: false,
         format: 'Y-m-d',
         validateOnBlur: false,
-        maxDate:today
     });
     var my_layer,is_iframe = self != top ? true : false;;
     if (is_iframe) {
@@ -290,6 +291,7 @@
             physicianid = $("select[name=physicianid] option:selected").val() ? $("select[name=physicianid] option:selected").val() : '';
             registeredfee_id = $("select[name=registeredfee_id] option:selected").val() ? $("select[name=registeredfee_id] option:selected").val() : '';
             subsection_type = $("select[name=subsection_type] option:selected").val() ? $("select[name=subsection_type] option:selected").val() : '';
+            dates = $("input[name=dates]").val() ? $("input[name=dates]").val() : '';
             if (department_id || physicianid || registeredfee_id || subsection_type || dates) {
                 _list_page = 1;
             }
@@ -439,6 +441,7 @@
                         return false;
                     }
                     var name = $("input[name=name]").val();
+                    if(!isChinese(name)){remindBox('姓名必须是汉字');return false;}
                     if (name.length == 0 || name.length < 0) {
                         remindBox('填写名字');
                         return false;
