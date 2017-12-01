@@ -100,5 +100,8 @@ return array(
     'ALIYUN_MEASSAGE_APPKEY'=>'', #阿里云短信发送key
     'ALIYUN_MEASSAGE_SECRET'=>'', #阿里云短信发送secret
     'ALIYUN_SIGNAME'=>'明医复诊平台',          #阿里云短信发送签名
-    'ALIYUN_TEMPLATE_CODE'=>''          #阿里云短信发送模板
+    'ALIYUN_TEMPLATE_CODE'=>'',          #阿里云短信发送模板
+        //***********************************极限验证验证码设置**************************************
+    "GEETEST_KEY" =>'5ff67ab4ca8279cbcff3682d98f6388b',
+    "GEETEST_ID" => 'e18d8e9f99d7aecc66ff96484f5b6961',
 );

@@ -346,11 +346,11 @@ class LoginController extends PublicBaseController
     {
         $u = I('post.u');
         $p = I('post.p');
-        $verify_code = I('post.verify_code');
+        $verify['geetest_challenge'] = I('post.geetest_challenge');
+        $verify['geetest_validate'] = I('post.geetest_validate');
+        $verify['geetest_seccode'] = I('post.geetest_seccode');
 
-
-        $verify = new \Think\Verify();
-        if(!$verify->check($verify_code))$this->resJSON(5, '验证码错误！');
+        if(!geetest_chcek_verify($verify))$this->resJSON(5, '请点击验证码验证！');
 
         $User = M('HisMember');
         if (!$User->autoCheckToken($_POST))$this->resJSON(6,'表单安全验证失败');
@@ -379,13 +379,20 @@ class LoginController extends PublicBaseController
         session_destroy();
         $this->redirect('/Login/index/hid/' . $hospital_info['uid']);
     }
-    /**
-     * 生成验证码
-     * Author: gmq
-     */
-    public function createVerify(){
-        $Verify = new \Think\Verify();
-        $Verify->entry();
-    }
+  /**
+ * geetest生成验证码
+ */
+public function geetest_show_verify(){
+    $geetest_id=C('GEETEST_ID');
+    $geetest_key=C('GEETEST_KEY');
+    $geetest=new \Org\Nx\Geetest($geetest_id,$geetest_key);
+    $user_id = "test";
+    $status = $geetest->pre_process($user_id);
+    $_SESSION['geetest']=array(
+        'gtserver'=>$status,
+        'user_id'=>$user_id
+        );
+    echo $geetest->get_response_str();
+}
 
 }

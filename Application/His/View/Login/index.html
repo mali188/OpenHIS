@@ -22,6 +22,7 @@
 
     <script src="__PUBLIC_HIS__/vendor/jquery/jquery.min.js"></script>
     <script src="__PUBLIC_HIS__/vendor/layer/layer.js"></script>
+    <script src="http://static.geetest.com/static/tools/gt.js"></script>
 </head>
 
 <body>
@@ -46,37 +47,34 @@
                             </ul>
                             <ul class="tabBox mt10" style="min-height: 186px;">
                                 <li  <if condition="$qr_img">class="on"</if>>
-                                    <div class="codeErm">
-                                        <if condition="$qr_img">
-                                            <img src="{$qr_img}" />
-                                            <p class="gray mt10">打开 手机微信  扫描二维码</p>
-                                            <else />
-                                            <div>
-                                                <h3 style="color: red;">未设置微信登录，无法使用</h3>
-                                            </div>
-
-                                        </if>
-                                        <div class="fz12 mt10 gray2">
-                                            <span class="mr10"><i class="fa fa-pencil"></i> 免输入</span><span class="mr10"><i class="fa fa-bolt"></i> 更快</span><span class=""><i class="fa fa-shield"></i> 更安全</span>
+                                <div class="codeErm">
+                                    <if condition="$qr_img">
+                                        <img src="{$qr_img}" />
+                                        <p class="gray mt10">打开 手机微信  扫描二维码</p>
+                                        <else />
+                                        <div>
+                                            <h3 style="color: red;">未设置微信登录，无法使用</h3>
                                         </div>
+
+                                    </if>
+                                    <div class="fz12 mt10 gray2">
+                                        <span class="mr10"><i class="fa fa-pencil"></i> 免输入</span><span class="mr10"><i class="fa fa-bolt"></i> 更快</span><span class=""><i class="fa fa-shield"></i> 更安全</span>
                                     </div>
+                                </div>
                                 </li>
                                 <li <if condition="!$qr_img">class="on"</if>>
-                                    <div class="form-group">
-                                        <label for="signin-email" class="control-label sr-only">手机号/邮箱</label>
-                                        <input type="text" class="form-control"  name="n" id="signin-email" value="" placeholder="手机号/邮箱">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="signin-password" class="control-label sr-only">密码</label>
-                                        <input type="password" class="form-control"  name="p" id="signin-password" value="" placeholder="密码">
-                                    </div>
-                                    <div class="form-group clearfix">
-                                        <label class="fancy-checkbox element-left">
-                                           <input type="text" id="verify_code" value="" placeholder="验证码" style="height: 38px;" maxlength="10" />
-                                        </label>
-                                        <img src="/Login/createVerify" width="40%" onclick="this.src='/Login/createVerify?id='+Math.random()" id="vimg" />
-                                    </div>
-                                    <button type="button" id="btn_submit" class="btn btn-primary btn-lg btn-block" style="margin-top: inherit; padding: 3px;">登陆</button>
+                                <div class="form-group">
+                                    <label for="signin-email" class="control-label sr-only">手机号/邮箱</label>
+                                    <input type="text" class="form-control"  name="n" id="signin-email" value="" placeholder="手机号/邮箱">
+                                </div>
+                                <div class="form-group">
+                                    <label for="signin-password" class="control-label sr-only">密码</label>
+                                    <input type="password" class="form-control"  name="p" id="signin-password" value="" placeholder="密码">
+                                </div>
+                                <div class="form-group clearfix" id='captcha'>
+
+                                </div>
+                                <button type="button" id="btn_submit" class="btn btn-primary btn-lg btn-block" style="margin-top: inherit; padding: 3px;">登陆</button>
                                 </li>
                             </ul>
                         </form>
@@ -101,67 +99,116 @@
 </html>
 
 <script type="text/javascript">
-    var enid='{$enid}';
+    var enid = '{$enid}';
+
+    var js_Geetest_ok = 0;
+    var _captchaObj;
+
     $(function () {
+
+
+        var handler = function (captchaObj) {
+            _captchaObj = captchaObj;
+            // 将验证码加到id为captcha的元素里
+            captchaObj.appendTo("#captcha");
+
+
+            captchaObj.onSuccess(function () {
+
+                js_Geetest_ok = 1;
+
+            });
+
+
+        };
+        // 获取验证码
+        $.get("{:U('Login/geetest_show_verify')}", function (data) {
+            // 使用initGeetest接口
+            // 参数1：配置参数，与创建Geetest实例时接受的参数一致
+            // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它做appendTo之类的事件
+            initGeetest({
+                gt: data.gt,
+                challenge: data.challenge,
+                product: "float", // 产品形式
+                offline: !data.success
+            }, handler);
+
+
+        }, 'json');
+
+
         //选项卡切换
-        $('.tabBtn > li').click(function(){
+        $('.tabBtn > li').click(function () {
             $(this).addClass('on').siblings('li').removeClass('on').closest('.tabBtn');
             $(this).closest('.tabBtn').siblings('.tabBox').find('> li').eq($(this).index()).addClass('on').siblings('li').removeClass('on');
         });
 
-        if(enid.length>0)check_qr_scan(enid);
+        if (enid.length > 0) check_qr_scan(enid);
 
         $("#btn_submit").click(function () {
             var u = $("#signin-email").val();
             var p = $("#signin-password").val();
-            var verify_code = $("#verify_code").val();
+            var test = $('.geetest_challenge').val();
+            var geetest_challenge = $('.geetest_challenge').val();
+            var geetest_validate = $('.geetest_validate').val();
+            var geetest_seccode = $('.geetest_seccode').val();
 
-            if(u==''||u.length==0){
+
+            if (u == '' || u.length == 0) {
                 layer.msg('请填写手机号或邮箱');
                 return false;
             }
 
-            if(p==''||p.length==0){
+            if (p == '' || p.length == 0) {
                 layer.msg('请填写登录密码');
                 return false;
             }
-
-            if(verify_code==''||verify_code.length==0){
-                layer.msg('请填写登录验证码');
+            if (js_Geetest_ok == 0) {
+                layer.msg('请点击验证码验证');
                 return false;
             }
 
             var f = $('input[type=hidden]').val();
 
+            $.post('/login/userlogin', {
+                u: u,
+                p: p,
+                __hash__: f,
+                geetest_challenge: geetest_challenge,
+                geetest_validate: geetest_validate,
+                geetest_seccode:geetest_seccode
+            }, function (res) {
 
-            $.post('/login/userlogin',{u:u,p:p,verify_code:verify_code,__hash__:f},function (res) {
-                if(res.status==0){
+                if (res.status != 0){
+                    js_Geetest_ok=0;
+                    _captchaObj.reset();
+                }
+
+                if (res.status == 0) {
                     var d = res.data;
-                    window.location.href='/login/enlogin?enuid='+d.enuid;
-                }else if(res.status==5){
-                    $("#vimg").attr('src','/Login/createVerify');
-                    $("#verify_code").val('');
+                    window.location.href = '/login/enlogin?enuid=' + d.enuid;
+                } else if (res.status == 5) {
                     layer.msg(res.msg);
-                }else{
+                } else {
                     layer.msg(res.msg);
                 }
-            },'json');
+            }, 'json');
 
         });
     });
 
     function check_qr_scan(enid) {
-        $.post('/login/check_scan',{enid:enid},function (res) {
-            if(res.status==0){
+        $.post('/login/check_scan', {enid: enid}, function (res) {
+            if (res.status == 0) {
                 var d = res.data;
-                if(d.status!=2){
-                    setTimeout("check_qr_scan('"+d.enid+"')",3000);
-                }else{
-                    window.location.href='/login/enlogin?enuid='+d.enuid+'&enid='+d.enid;
+                if (d.status != 2) {
+                    setTimeout("check_qr_scan('" + d.enid + "')", 3000);
+                } else {
+                    window.location.href = '/login/enlogin?enuid=' + d.enuid + '&enid=' + d.enid;
                 }
-            }else{
+            } else {
                 layer.msg(res.msg);
             }
-        },'json');
+        }, 'json');
     }
 </script>
