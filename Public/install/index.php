@@ -114,7 +114,7 @@ if (@$_GET['c'] == 'success') {
         mysqli:
         $DB_TYPE = 'mysqli';
 
-
+ 
         // 连接数据库
         $link = @new mysqli("{$data['DB_HOST']}:{$data['DB_PORT']}", $data['DB_USER'], $data['DB_PWD']);
 
