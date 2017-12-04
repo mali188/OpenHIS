@@ -85,7 +85,7 @@ if (@$_GET['c'] == 'success') {
         if($db_file == './db_demo.sql'){
             #更新管理员密码
 
-            mysql_query("update ".$data['DB_PREFIX']."his_member set user_name='".$_POST['adm_p']."',password='".encrypt_password2($_POST['adm_p'])."' where uid=1",$link);
+            mysql_query("update ".$data['DB_PREFIX']."his_member set user_name='".$_POST['adm_u']."',password='".encrypt_password2($_POST['adm_p'])."' where uid=1",$link);
 
             #更新医院名称
             mysql_query("update ".$data['DB_PREFIX']."his_hospital set hospital_name='".$_POST['hospital_name']."',owner_name='".$_POST['owner_name']."' where id=1",$link);
@@ -142,7 +142,7 @@ if (@$_GET['c'] == 'success') {
         if($db_file == './db_demo.sql'){
             #更新管理员密码
 
-            $link->query("update ".$data['DB_PREFIX']."his_member set user_name='".$_POST['adm_p']."',password='".encrypt_password2($_POST['adm_p'])."' where uid=1");
+            $link->query("update ".$data['DB_PREFIX']."his_member set user_name='".$_POST['adm_u']."',password='".encrypt_password2($_POST['adm_p'])."' where uid=1");
 
             #更新医院名称
             $link->query("update ".$data['DB_PREFIX']."his_hospital set hospital_name='".$_POST['hospital_name']."',owner_name='".$_POST['owner_name']."' where id=1");
