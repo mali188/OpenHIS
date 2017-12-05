@@ -68,7 +68,7 @@ class LoginController extends PublicBaseController
 
             $enid = $this->encrypt($qr_id . '@@' . $this->hospital_info['uid']);
 
-            $url = _URL_ . 'login/go?id=' . $enid;
+            $url = C('MAIN_SERVER_DOMAIN') . 'login/go?id=' . $enid;
 
             $this->assign('qr_img', '/qr?id=' . $enid);
             $this->assign('enid', $enid);

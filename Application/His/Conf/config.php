@@ -1,8 +1,5 @@
 <?php
 //*************************************微信相关设置***********************************
-//这里填入的你域名
-define("_URL_","http://his.dzmtech.com/");
-
 return array(
 
 	'COOKIE_PREFIX' => 'his_', //cookie的前缀
@@ -14,8 +11,6 @@ return array(
 	'DEFAULT_MODULE'         =>  'His',  // 默认模块
 	'DEFAULT_CONTROLLER'     =>  'Index', // 默认控制器名称
 	'DEFAULT_ACTION'         =>  'index', // 默认操作名称
-    #'PUB_FILE_DIR'=>_URL_.'Public/his/',
-    'PUB_FILE_DIR'=>_URL_.'Public/his/',
 
 
     'URL_ROUTER_ON'   => true, //开启路由
