@@ -346,11 +346,11 @@ class LoginController extends PublicBaseController
     {
         $u = I('post.u');
         $p = I('post.p');
-        $verify['geetest_challenge'] = I('post.geetest_challenge');
+        /*$verify['geetest_challenge'] = I('post.geetest_challenge');
         $verify['geetest_validate'] = I('post.geetest_validate');
         $verify['geetest_seccode'] = I('post.geetest_seccode');
 
-        if(!geetest_chcek_verify($verify))$this->resJSON(5, '请点击验证码验证！');
+        if(!geetest_chcek_verify($verify))$this->resJSON(5, '请点击验证码验证！');*/
 
         $User = M('HisMember');
         if (!$User->autoCheckToken($_POST))$this->resJSON(6,'表单安全验证失败');
